@@ -5,8 +5,8 @@ Autonomous ad optimization loop. Generates RSA copy with Claude, serves via Goog
 ## Run
 
 ```bash
-cd /home/apexaipc/projects/ai-ads-loop
-source ~/.env.shared
+cd ai-ads-loop
+source .env                                 # or your shared dotenv
 python -m ai_ads_loop.runner --dry-run     # test without API calls
 python -m ai_ads_loop.runner --status      # show campaign status
 python -m ai_ads_loop.runner               # live run
@@ -14,7 +14,7 @@ python -m ai_ads_loop.runner               # live run
 
 ## Architecture
 
-- `config.py` — all settings, loads credentials from ~/.env.shared
+- `config.py` — all settings, loads credentials from the environment
 - `repository.py` — all DB access (SQLite), Repository singleton
 - `ads_client.py` — Google Ads API wrapper + DryRunAdsClient for testing
 - `copy_generator.py` — Claude generates headlines + descriptions
@@ -29,9 +29,9 @@ python -m ai_ads_loop.runner               # live run
 - Kill switch is sacred — if triggered, always pause before anything else
 - HIL gate on generation 1 is mandatory — never skip for any reason
 - Test on dry-run / test account before any real spend
-- `GOOGLE_ADS_TEST_ACCOUNT_ID` in ~/.env.shared is the safe sandbox
+- `GOOGLE_ADS_TEST_ACCOUNT_ID` in your environment is the safe sandbox
 
-## Credentials (all in ~/.env.shared)
+## Credentials (all loaded from the environment)
 
 ```
 GOOGLE_ADS_CUSTOMER_ID
@@ -46,12 +46,11 @@ ANTHROPIC_API_KEY
 
 ## Before First Run
 
-1. Fill in `GOOGLE_ADS_TEST_ACCOUNT_ID` in `~/.env.shared`
+1. Fill in `GOOGLE_ADS_TEST_ACCOUNT_ID` in your environment
 2. Run `python -m ai_ads_loop.runner --dry-run` to verify config loads
 3. Create first campaign via Python (or add manually and set google_campaign_id/google_ad_group_id in DB)
 4. HIL gate will prompt for copy approval on first run
 
 ## Data locations
 
-- DB: `data/ai_ads_loop.db`
-- Plan: `~/vault/projects/ai-google-ads-loop/PLAN.md`
+- DB: `data/ai_ads_loop.db` (created at runtime; not committed)
