@@ -1,5 +1,7 @@
 # AI Google Ads Loop
 
+> **STATUS: FROZEN 2026-07-13 — MATS MK2 recovery. Parked deliberately (not deleted) to shrink active project surface during the MATS thesis proof. Was stale since 05-30 and never went live (no test account wired). Resume decision after the 2026-07-23 gate.**
+
 Autonomous ad optimization loop. Generates RSA copy with Claude, serves via Google Ads API, evaluates performance, promotes winners.
 
 ## Run
